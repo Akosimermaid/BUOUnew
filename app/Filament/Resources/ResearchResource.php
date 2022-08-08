@@ -89,7 +89,7 @@ class ResearchResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')->label('ID'),
+                TextColumn::make('id')->label('ID')->sortable(),
                 TextColumn::make('Date')->label('DATE'),
                 TextColumn::make('Title')->label('TITLE'),
                 TextColumn::make('Research_Name')->label('RESEARCHERS NAME'),
