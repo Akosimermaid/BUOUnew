@@ -22,3 +22,4 @@
         @livewire('notifications')
     </body>
 </html>
+<!-- Files that I added for the table are in the App\Filament\Resources -->
