@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +24,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+      //   FilamentBreezy::setPasswordRules(
+       //     [
+         //       Password::min(8)
+           //         ->letters()
+             //       ->numbers()
+          //          ->mixedCase()
+           //         ->uncompromised(3)
+           // ]
+       // );
     }
 }
