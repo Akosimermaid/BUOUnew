@@ -112,6 +112,24 @@ class ResearchResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
+                FilamentExportBulkAction::make('export')
+                ->fileName('My File') // Default file name
+                ->timeFormat('m y d') // Default time format for naming exports
+                ->defaultFormat('pdf') // xlsx, csv or pdf
+                ->defaultPageOrientation('landscape') // Page orientation for pdf files. portrait or landscape
+                ->disableAdditionalColumns() // Disable additional columns input
+                ->disableFilterColumns() // Disable filter columns input
+                ->disableFileName() // Disable file name input
+                ->disableFileNamePrefix() // Disable file name prefix
+                ->disablePreview() // Disable export preview
+                ->fileNameFieldLabel('File Name') // Label for file name input
+                ->formatFieldLabel('Format') // Label for format input
+                ->pageOrientationFieldLabel('Page Orientation') // Label for page orientation input
+                ->filterColumnsFieldLabel('filter columns') // Label for filter columns input
+                ->additionalColumnsFieldLabel('Additional Columns') // Label for additional columns input
+                ->additionalColumnsTitleFieldLabel('Title') // Label for additional columns' title input 
+                ->additionalColumnsDefaultValueFieldLabel('Default Value') // Label for additional columns' default value input 
+                ->additionalColumnsAddButtonLabel('Add Column') // Label for additional columns' add button 
             ]);
     }
     
