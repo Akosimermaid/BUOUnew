@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\RelationManagers;
+
+// I've imported the Class for the Export
 use AlperenErsoy\FilamentExport\Actions\FilamentExportBulkAction;
 
 class UserResource extends Resource
@@ -28,6 +30,7 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
+                // Here are the Data Columns For the User Table
                 Card::make()
                     ->schema([
                         TextInput::make('name')
@@ -58,10 +61,17 @@ class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+        // Here are the specified function to be shown in the table ui 
             ->columns([
-                TextColumn::make('id')->label('ID')->sortable(),
-                TextColumn::make('name')->label('NAME'),
-                TextColumn::make('email')->label('EMAIL'),
+                TextColumn::make('id')
+                ->label('ID')
+                ->sortable(),
+                TextColumn::make('name')
+                ->label('NAME')
+                ->searchable(),
+                TextColumn::make('email')
+                ->label('EMAIL')
+                ->searchable(),
             ])
             ->filters([
                 //
@@ -72,7 +82,8 @@ class UserResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
-                //FilamentExportHeaderAction::make('export')
+
+                //This is for the Export Function Plug in
                 FilamentExportBulkAction::make('export')
             ]);
     }
