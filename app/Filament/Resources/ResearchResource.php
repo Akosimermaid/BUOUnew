@@ -112,10 +112,7 @@ class ResearchResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
-                //FilamentExportBulkAction::make('export')
-                 //   ->extraViewData([
-                  //      'myVariable' => 'My Variable'
-                  //  ])
+                FilamentExportBulkAction::make('export')
             ]);
     }
     
