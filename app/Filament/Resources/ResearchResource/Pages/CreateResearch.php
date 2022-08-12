@@ -11,7 +11,7 @@ class CreateResearch extends CreateRecord
     protected static string $resource = ResearchResource::class;
 
     protected function getRedirectUrl(): string
-{
+    {
     return $this->getResource()::getUrl('index');
-}
+    }
 }
