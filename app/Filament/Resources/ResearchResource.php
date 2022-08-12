@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Filament\Resources;
+use Closure;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Research;
@@ -25,11 +26,13 @@ class ResearchResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                
+                // Heres the data shown in the Research Table
+                //I used card in order to properly show the input fields in 2 columns
                 Card::make()
                     ->schema([
                     DatePicker::make('Date')->required(),
@@ -55,20 +58,23 @@ class ResearchResource extends Resource
                     DatePicker::make('Target_Date')->required(),
 
                     TextInput::make('CREC')
+                    ->label('CREC')
                     ->dehydrateStateUsing(fn ($state) => ucwords($state))
                     ->required(),
 
                     TextInput::make('URECOM')
+                    ->label('URECOM')
                     ->dehydrateStateUsing(fn ($state) => ucwords($state))
                     ->required(),
-                
-                    Select::make('Fund')->required()
-                        ->options([
-                            'Internal' => 'Internal',
-                            'External' => 'External',
-                            'Others' => 'Others',
-                        ]),
-                 
+
+                    TextInput::make('Fund')
+                        ->label('Funds  (If Others Please Specify)')
+                        ->datalist([
+                            'Internal',
+                            'External',
+                        ])
+                        ->required(),  
+
                     TextInput::make('Budget')->required()
                         ->numeric()
                         ->mask(fn (TextInput\Mask $mask) => $mask
@@ -89,20 +95,51 @@ class ResearchResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+        // Here are the data shown in the table ui, the columns with the "searchable" can be searched in the searching function
             ->columns([
-                TextColumn::make('id')->label('ID')->sortable(),
-                TextColumn::make('Date')->label('DATE'),
-                TextColumn::make('Title')->label('TITLE'),
-                TextColumn::make('Research_Name')->label('RESEARCHERS NAME'),
-                TextColumn::make('Partner_Agency')->label('PARTNER AGENCY'),
-                TextColumn::make('Designation')->label('DESIGNATION'),
-                TextColumn::make('Start_Date')->label('START DATE'),
-                TextColumn::make('Target_Date')->label('TARGET DATE'),
-                TextColumn::make('CREC')->label('CREC'),
-                TextColumn::make('URECOM')->label('URECOM'),
-                TextColumn::make('Fund')->label('FUND'),
-                TextColumn::make('Budget')->label('BUDGET'),
-                TextColumn::make('Remarks')->label('REMARKS'),
+                TextColumn::make('id')
+                ->label('ID')
+                ->sortable()
+                ->searchable(),
+
+                TextColumn::make('Date')
+                ->label('DATE'),
+                
+                TextColumn::make('Title')
+                ->label('TITLE')
+                ->searchable(),
+
+                TextColumn::make('Research_Name')
+                ->label('RESEARCHERS NAME')
+                ->searchable(),
+                TextColumn::make('Partner_Agency')
+                ->label('PARTNER AGENCY')
+                ->searchable(),
+
+                TextColumn::make('Designation')
+                ->label('DESIGNATION')
+                ->searchable(),
+
+                TextColumn::make('Start_Date')
+                ->label('START DATE'),
+
+                TextColumn::make('Target_Date')
+                ->label('TARGET DATE'),
+
+                TextColumn::make('CREC')
+                ->label('CREC'),
+
+                TextColumn::make('URECOM')
+                ->label('URECOM'),
+
+                TextColumn::make('Fund')
+                ->label('FUND'),
+
+                TextColumn::make('Budget')
+                ->label('BUDGET'),
+
+                TextColumn::make('Remarks')
+                ->label('REMARKS'),
 
             ])
             ->filters([
@@ -113,6 +150,8 @@ class ResearchResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
+                
+                // This is for the export function
                 FilamentExportBulkAction::make('export')
             ]);
     }
@@ -132,4 +171,5 @@ class ResearchResource extends Resource
             'edit' => Pages\EditResearch::route('/{record}/edit'),
         ];
     }    
+
 }
