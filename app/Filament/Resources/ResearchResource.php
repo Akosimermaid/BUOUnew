@@ -162,6 +162,9 @@ class ResearchResource extends Resource
             //
         ];
     }
+
+
+   
     
     public static function getPages(): array
     {

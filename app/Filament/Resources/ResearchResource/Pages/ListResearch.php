@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources\ResearchResource\Pages;
 
-use App\Filament\Resources\ResearchResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ListRecords;
+use ResearchResource\Widgets\StatsOverview;
+use App\Filament\Resources\ResearchResource;
+
 
 class ListResearch extends ListRecords
 {
