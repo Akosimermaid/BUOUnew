@@ -11,8 +11,11 @@ class StatsOverview extends BaseWidget
     protected function getCards(): array
     {
         return [
+            Card::make('Research Total', Research::all()->count()),
             Card::make('Recently Added', 
-            implode(',', Research::latest()->take(5)->pluck('Title')->toArray())),
+                implode("\n", Research::latest()->take(5)->pluck('Title')->toArray())
+               // Research::orderBy('created_at', 'desc')->first()->Title
+            ),
            
         ];
     }

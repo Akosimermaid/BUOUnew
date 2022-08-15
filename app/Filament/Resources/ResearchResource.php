@@ -80,7 +80,11 @@ class ResearchResource extends Resource
                         ->mask(fn (TextInput\Mask $mask) => $mask
                         ->numeric()
                         ->decimalPlaces(2) // Set the number of digits after the decimal point.
-                        ->minValue(1) // Set the minimum value that the number can be.
+                        ->decimalSeparator('.') // Add a separator for decimal numbers.
+                        ->mapToDecimalSeparator([',']) // Map additional characters to the decimal separator.
+                        ->minValue(100) // Set the minimum value that the number can be.
+                        ->normalizeZeros() // Append or remove zeros at the end of the number.
+                        ->padFractionalZeros() // Pad zeros at the end of the number to always maintain the maximum number of decimal places.
                         ->thousandsSeparator(','), // Add a separator for thousands.
                     ),
                     
@@ -136,7 +140,8 @@ class ResearchResource extends Resource
                 ->label('FUND'),
 
                 TextColumn::make('Budget')
-                ->label('BUDGET'),
+                ->label('BUDGET')
+                ->money('php'),
 
                 TextColumn::make('Remarks')
                 ->label('REMARKS'),
