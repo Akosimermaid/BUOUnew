@@ -15,5 +15,7 @@ class agency extends Model
         'id',
         'Name',
         'Address',
+        'updated_at',
+        'created_at',
     ];
 }

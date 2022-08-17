@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 use Closure;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\agency;
@@ -10,11 +11,13 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
+use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ResearchResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -58,14 +61,22 @@ class ResearchResource extends Resource
 
                     DatePicker::make('Target_Date')->required(),
 
-                    TextInput::make('CREC')
+                    Select::make('CREC')
                     ->label('CREC')
-                    ->dehydrateStateUsing(fn ($state) => ucwords($state))
+                    ->options([
+                        'Approved' => 'Approved',
+                        'Disapproved' => 'Disapproved',
+                        'Rework' => 'Rework',
+                    ])
                     ->required(),
 
-                    TextInput::make('URECOM')
+                    Select::make('URECOM')
                     ->label('URECOM')
-                    ->dehydrateStateUsing(fn ($state) => ucwords($state))
+                    ->options([
+                        'Approved' => 'Approved',
+                        'Disapproved' => 'Disapproved',
+                        'Rework' => 'Rework',
+                    ])
                     ->required(),
 
                     TextInput::make('Fund')
@@ -149,7 +160,24 @@ class ResearchResource extends Resource
 
             ])
             ->filters([
-                //
+                Filter::make('Target_Date')
+                    ->label('On-Going')
+                    ->query(fn (Builder $query): Builder => $query->where('Target_Date','>', Carbon::now())),
+                SelectFilter::make('CREC')
+                    ->label('CREC')
+                    ->options([
+                        'Approved' => 'Approved',
+                        'Disapproved' => 'Disapproved',
+                        'Rework' => 'Rework',
+                    ]),
+
+                SelectFilter::make('URECOM')
+                    ->label('URECOM')
+                    ->options([
+                        'Approved' => 'Approved',
+                        'Disapproved' => 'Disapproved',
+                        'Rework' => 'Rework',
+                    ])
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

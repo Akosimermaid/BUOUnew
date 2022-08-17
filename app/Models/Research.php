@@ -29,8 +29,5 @@ class Research extends Model
         'updated_at',
         'created_at',
     ];
-     public function posts(){
-
-        return $this->hasMany(Post::class);
-     }
+    
 }
