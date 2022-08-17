@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 use Closure;
 use Filament\Forms;
 use Filament\Tables;
+use App\Models\agency;
 use App\Models\Research;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
@@ -45,8 +46,8 @@ class ResearchResource extends Resource
                     ->dehydrateStateUsing(fn ($state) => ucwords($state))
                     ->required(),
 
-                    TextInput::make('Partner_Agency')
-                    ->dehydrateStateUsing(fn ($state) => ucwords($state))
+                    Select::make('Partner_Agency')
+                    ->options(agency::all()->pluck('Name'))
                     ->required(), 
 
                     TextInput::make('Designation')
